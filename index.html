@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Proxy Checker</title>
+  <style>
+    body { font-family: Arial; padding: 30px; }
+    input, button { padding: 10px; width: 300px; margin-top: 10px; }
+    #result { margin-top:20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Proxy Checker</h2>
+
+  <input id="proxy" placeholder="ip:port OR ip:port:user:pass">
+  <button onclick="checkProxy()">Check Proxy</button>
+
+  <div id="result"></div>
+
+<script>
+async function checkProxy() {
+    const proxy = document.getElementById("proxy").value;
+
+    const res = await fetch("/check", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ proxy })
+    });
+
+    const data = await res.json();
+    document.getElementById("result").innerText = data.message;
+}
+</script>
+
+</body>
+</html>
